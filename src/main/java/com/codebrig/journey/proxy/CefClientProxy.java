@@ -3,6 +3,7 @@ package com.codebrig.journey.proxy;
 import com.codebrig.journey.proxy.browser.CefMessageRouterProxy;
 import com.codebrig.journey.proxy.handler.CefJSDialogHandlerProxy;
 import com.codebrig.journey.proxy.handler.CefLifeSpanHandlerProxy;
+import com.codebrig.journey.proxy.handler.CefLoadHandlerProxy;
 import org.joor.Reflect;
 
 import java.lang.reflect.Proxy;
@@ -26,6 +27,8 @@ public interface CefClientProxy extends Reflect.ProxyObject {
             args[0] = ((Reflect.ProxyInvocationHandler) Proxy.getInvocationHandler(args[0])).getUnderlyingObject();
         } else if ("addMessageRouter".equals(methodName)) {
             args[0] = ((Reflect.ProxyInvocationHandler) Proxy.getInvocationHandler(args[0])).getUnderlyingObject();
+        } else if ("addLoadHandler".equals(methodName)) {
+            args[0] = ((Reflect.ProxyInvocationHandler) Proxy.getInvocationHandler(args[0])).getUnderlyingObject();
         }
     };
 
@@ -35,6 +38,8 @@ public interface CefClientProxy extends Reflect.ProxyObject {
         } else if ("addLifeSpanHandler".equals(methodName)) {
             return Reflect.on(returnValue).as(CefClientProxy.class);
         } else if ("addJSDialogHandler".equals(methodName)) {
+            return Reflect.on(returnValue).as(CefClientProxy.class);
+        } else if ("addLoadHandler".equals(methodName)) {
             return Reflect.on(returnValue).as(CefClientProxy.class);
         }
         return returnValue;
@@ -47,6 +52,8 @@ public interface CefClientProxy extends Reflect.ProxyObject {
     CefClientProxy addLifeSpanHandler(CefLifeSpanHandlerProxy handler);
 
     CefClientProxy addJSDialogHandler(CefJSDialogHandlerProxy handler);
+
+    CefClientProxy addLoadHandler(CefLoadHandlerProxy var1);
 
     void addMessageRouter(CefMessageRouterProxy messageRouter);
 
