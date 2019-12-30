@@ -1,20 +1,17 @@
 package com.codebrig.journey;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.util.Enumeration;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 
 /**
  * Downloads and loads the necessary CEF files for the current OS.
@@ -44,6 +41,11 @@ public class JourneyLoader extends URLClassLoader {
     }
 
     public static JourneyLoader getJourneyClassLoader() {
+        setup();
+        return JOURNEY_CLASS_LOADER;
+    }
+    public static JourneyLoader getJourneyClassLoader(String path) {
+        NATIVE_DIRECTORY = new File(path);
         setup();
         return JOURNEY_CLASS_LOADER;
     }
@@ -98,9 +100,9 @@ public class JourneyLoader extends URLClassLoader {
             }
 
             int chromiumMajorVersion = Integer.parseInt(jcefVersion.split("\\.")[0]);
-            String jcefDistribFile = "jcef-distrib-" + providerName.replace("_", "") + ".zip";
+           /*  String jcefDistribFile = "jcef-distrib-" + providerName.replace("_", "") + ".zip";
             File localNative = new File(NATIVE_DIRECTORY, jcefDistribFile);
-            if ("online".equals(MODE) && !localNative.exists()) {
+           if ("online".equals(MODE) && !localNative.exists()) {
                 JOURNEY_LOADER_LISTENER.downloadingNativeCEFFiles();
                 Files.copy(new URL(String.format("%s/releases/download/%s-%s-assets/%s",
                         PROJECT_URL, VERSION, chromiumMajorVersion, jcefDistribFile)).openStream(),
@@ -163,7 +165,7 @@ public class JourneyLoader extends URLClassLoader {
                         }
                     }
                 }
-            }
+            }*/
             JOURNEY_LOADER_LISTENER.extractedNativeCEFFiles();
 
             JOURNEY_LOADER_LISTENER.loadingNativeCEFFiles();
